@@ -1,18 +1,43 @@
 const core = require('@actions/core');
-const wait = require('./wait');
+const COS = require('cos-nodejs-sdk-v5')
 
-
-// most @actions toolkit packages have async methods
 async function run() {
   try {
-    const ms = core.getInput('milliseconds');
-    core.info(`Waiting ${ms} milliseconds ...`);
+    const secretId = core.getInput('secretId');
+    const secretKey = core.getInput('secretKey');
+    const bucket = core.getInput('bucket');
+    const region = core.getInput('region');
+    const key = core.getInput('key');
+    const content = core.getInput('content');
 
-    core.debug((new Date()).toTimeString()); // debug is only output if you set the secret `ACTIONS_RUNNER_DEBUG` to true
-    await wait(parseInt(ms));
-    core.info((new Date()).toTimeString());
+    core.info();
 
-    core.setOutput('time', new Date().toTimeString());
+    let body = '';
+    if (content.startsWith('data:image')) {
+      body = Buffer.from(content.split(',')[1], 'base64');
+    } else {
+      body = content;
+    }
+    
+    const cos = new COS({
+      SecretId: secretId,
+      SecretKey: secretKey
+    });
+    const upload = () => new Promise((resolve, reject) => {
+      cos.putObject({
+        Bucket: bucket,
+        Region: region,
+        Key: key,
+        Body: body
+      }, (err, data) => {
+        if (err) reject(err)
+        resolve(data.Location)
+      })
+    })
+
+    const url = await upload()
+
+    core.setOutput('url', url);
   } catch (error) {
     core.setFailed(error.message);
   }
