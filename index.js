@@ -7,7 +7,7 @@ async function run() {
     const secretKey = core.getInput('secretKey');
     const bucket = core.getInput('bucket');
     const region = core.getInput('region');
-    const key = core.getInput('key') || Date.now();
+    const key = core.getInput('key');
     const content = core.getInput('content');
 
     core.info(key);
@@ -27,7 +27,7 @@ async function run() {
       cos.putObject({
         Bucket: bucket,
         Region: region,
-        Key: key,
+        Key: key || Date.now(),
         Body: body
       }, (err, data) => {
         if (err) reject(err)
