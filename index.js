@@ -10,7 +10,7 @@ async function run() {
     const key = core.getInput('key') || Date.now();
     const content = core.getInput('content');
 
-    // core.info();
+    core.info(key);
 
     let body = '';
     if (content.startsWith('data:image')) {

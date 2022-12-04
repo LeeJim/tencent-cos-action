@@ -16,6 +16,7 @@ inputs:
   key:
     description: 'COS Object key name'
     required: false
+    default: ''
   content:
     description: 'Content to be uploaded to COS'
     required: true
