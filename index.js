@@ -7,10 +7,11 @@ async function run() {
     const secretKey = core.getInput('secretKey');
     const bucket = core.getInput('bucket');
     const region = core.getInput('region');
-    const key = core.getInput('key');
     const content = core.getInput('content');
 
-    core.info(key);
+    const name = Date.now() + '-' + Math.ceil(Math.random() * 100)
+
+    core.info(name);
 
     let body = '';
     if (content.startsWith('data:image')) {
@@ -27,7 +28,7 @@ async function run() {
       cos.putObject({
         Bucket: bucket,
         Region: region,
-        Key: key || Date.now(),
+        Key: name,
         Body: body
       }, (err, data) => {
         if (err) reject(err)

@@ -13,10 +13,6 @@ inputs:
   region:
     description: 'COS bucket region'
     required: true
-  key:
-    description: 'COS Object key name'
-    required: false
-    default: ''
   content:
     description: 'Content to be uploaded to COS'
     required: true
