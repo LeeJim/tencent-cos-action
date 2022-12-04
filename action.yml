@@ -18,7 +18,7 @@ inputs:
     required: false
   content:
     description: 'Content to be uploaded to COS'
-    required: trie
+    required: true
 outputs:
   url:
     description: 'Cos Location'
