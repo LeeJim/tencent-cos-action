@@ -1,13 +1,27 @@
 name: 'Wait'
 description: 'Wait a designated number of milliseconds'
 inputs:
-  milliseconds:  # id of input
-    description: 'number of milliseconds to wait'
+  secretId:
+    description: 'Tencent Cloud secret id'
     required: true
-    default: '1000'
+  secretKey:
+    description: 'Tencent Cloud secret key'
+    required: true
+  bucket:
+    description: 'COS bucket name'
+    required: true
+  region:
+    description: 'COS bucket region'
+    required: true
+  key:
+    description: 'COS Object key name'
+    required: false
+  content:
+    description: 'Content to be uploaded to COS'
+    required: trie
 outputs:
-  time: # output will be available to future steps
-    description: 'The current time after waiting'
+  url:
+    description: 'Cos Location'
 runs:
   using: 'node16'
   main: 'dist/index.js'
