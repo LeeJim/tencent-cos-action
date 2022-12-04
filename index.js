@@ -7,10 +7,10 @@ async function run() {
     const secretKey = core.getInput('secretKey');
     const bucket = core.getInput('bucket');
     const region = core.getInput('region');
-    const key = core.getInput('key');
+    const key = core.getInput('key') || Date.now();
     const content = core.getInput('content');
 
-    core.info();
+    // core.info();
 
     let body = '';
     if (content.startsWith('data:image')) {
