@@ -8,8 +8,9 @@ async function run() {
     const bucket = core.getInput('bucket');
     const region = core.getInput('region');
     const content = core.getInput('content');
+    const key = core.getInput('key');
 
-    const name = Date.now() + '-' + Math.ceil(Math.random() * 100)
+    const name = Date.now() + '-' + Math.ceil(Math.random() * 100) + '.jpg'
 
     core.info(name);
 
@@ -28,7 +29,7 @@ async function run() {
       cos.putObject({
         Bucket: bucket,
         Region: region,
-        Key: name,
+        Key: key || name,
         Body: body
       }, (err, data) => {
         if (err) reject(err)
