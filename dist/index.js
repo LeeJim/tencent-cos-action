@@ -64718,7 +64718,7 @@ async function run() {
         Body: body
       }, (err, data) => {
         if (err) reject(err)
-        resolve(data.Location)
+        resolve('https://' + data.Location)
       })
     })
 
